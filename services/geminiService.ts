@@ -1,15 +1,25 @@
-
 import { GoogleGenAI, FunctionDeclaration, Type } from '@google/genai';
 import type { FunctionCall } from '../types.ts';
 import { PatientRequestType, AppointmentRequestType, MedicalRecordRequestType, BillingRequestType } from '../types.ts';
 
-const API_KEY = process.env.API_KEY;
+// Kita tidak menginisialisasi di top-level untuk mencegah White Screen of Death 
+// jika process.env belum siap atau error.
+let aiInstance: GoogleGenAI | null = null;
 
-if (!API_KEY) {
-  throw new Error("API_KEY environment variable is not set.");
-}
+const getAI = () => {
+  if (aiInstance) return aiInstance;
 
-const ai = new GoogleGenAI({ apiKey: API_KEY });
+  // Mengambil key dengan aman. Jika process atau env undefined, gunakan string kosong.
+  // @ts-ignore - process mungkin tidak ada di definisi tipe browser standar
+  const apiKey = (window.process && window.process.env && window.process.env.API_KEY) || process.env.API_KEY;
+
+  if (!apiKey) {
+    throw new Error("API_KEY tidak ditemukan. Pastikan Anda telah mengonfigurasi Environment Variable atau memasukkannya di index.html (untuk testing).");
+  }
+
+  aiInstance = new GoogleGenAI({ apiKey: apiKey });
+  return aiInstance;
+};
 
 const SYSTEM_INSTRUCTION = `PERAN UTAMA: Anda adalah "Koordinator Pusat Sistem Rumah Sakit Terpadu" (Hospital Integrated System Coordinator). Tugas Anda BUKAN untuk menjawab pertanyaan pengguna secara langsung, melainkan untuk MENGANALISIS INTENSI mereka dengan AKURAT dan Mendelegasikan tugas tersebut ke SATU Sub-agen spesialis yang paling tepat.
 
@@ -83,6 +93,8 @@ const tools: FunctionDeclaration[] = [
 
 export const delegateTask = async (userInput: string): Promise<FunctionCall[] | null> => {
   try {
+    const ai = getAI(); // Inisialisasi terjadi di sini, bukan saat load file
+    
     const response = await ai.models.generateContent({
       model: 'gemini-3-pro-preview',
       contents: userInput,
@@ -96,7 +108,7 @@ export const delegateTask = async (userInput: string): Promise<FunctionCall[] | 
   } catch (error) {
     console.error("Gemini API call failed:", error);
     if (error instanceof Error) {
-        throw new Error(`Gemini API Error: ${error.message}`);
+        throw new Error(`${error.message}`);
     }
     throw new Error("An unknown error occurred during the Gemini API call.");
   }
