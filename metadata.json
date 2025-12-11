@@ -1,0 +1,5 @@
+{
+  "name": "Hospital AI System Coordinator",
+  "description": "An AI-powered system coordinator for an integrated hospital system that analyzes user intent and delegates tasks to specialized sub-agents for patient management, appointments, medical records, and billing.",
+  "requestFramePermissions": []
+}
