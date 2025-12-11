@@ -1,10 +1,10 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import type { ChatMessage, FunctionCall } from './types';
-import { delegateTask } from './services/geminiService';
-import { ChatInput } from './components/ChatInput';
-import { Header } from './components/Header';
-import { MessageList } from './components/MessageList';
+import type { ChatMessage, FunctionCall } from './types.ts';
+import { delegateTask } from './services/geminiService.ts';
+import { ChatInput } from './components/ChatInput.tsx';
+import { Header } from './components/Header.tsx';
+import { MessageList } from './components/MessageList.tsx';
 
 const App: React.FC = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);

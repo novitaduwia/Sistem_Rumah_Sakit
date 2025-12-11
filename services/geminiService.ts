@@ -1,7 +1,7 @@
 
 import { GoogleGenAI, FunctionDeclaration, Type } from '@google/genai';
-import type { FunctionCall } from '../types';
-import { PatientRequestType, AppointmentRequestType, MedicalRecordRequestType, BillingRequestType } from '../types';
+import type { FunctionCall } from '../types.ts';
+import { PatientRequestType, AppointmentRequestType, MedicalRecordRequestType, BillingRequestType } from '../types.ts';
 
 const API_KEY = process.env.API_KEY;
 

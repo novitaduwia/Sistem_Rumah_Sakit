@@ -1,7 +1,7 @@
 
 import React from 'react';
-import type { FunctionCall } from '../types';
-import { PatientIcon, CalendarIcon, MedicalRecordIcon, BillingIcon } from './icons';
+import type { FunctionCall } from '../types.ts';
+import { PatientIcon, CalendarIcon, MedicalRecordIcon, BillingIcon } from './icons/index.ts';
 
 interface FunctionCallDisplayProps {
   functionCall: FunctionCall;

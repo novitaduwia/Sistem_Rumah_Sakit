@@ -1,7 +1,7 @@
 
 import React, { useRef, useEffect } from 'react';
-import type { ChatMessage } from '../types';
-import { FunctionCallDisplay } from './FunctionCallDisplay';
+import type { ChatMessage } from '../types.ts';
+import { FunctionCallDisplay } from './FunctionCallDisplay.tsx';
 
 interface MessageListProps {
   messages: ChatMessage[];

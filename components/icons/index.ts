@@ -1,5 +1,5 @@
 
-export * from './PatientIcon';
-export * from './CalendarIcon';
-export * from './MedicalRecordIcon';
-export * from './BillingIcon';
+export * from './PatientIcon.tsx';
+export * from './CalendarIcon.tsx';
+export * from './MedicalRecordIcon.tsx';
+export * from './BillingIcon.tsx';
